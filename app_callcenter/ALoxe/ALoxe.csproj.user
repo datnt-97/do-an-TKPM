@@ -55,6 +55,9 @@
     <Compile Update="UI\ucMap.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UI\ucOverview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UI\ucSchedule.cs">
       <SubType>UserControl</SubType>
     </Compile>

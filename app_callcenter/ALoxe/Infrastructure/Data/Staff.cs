@@ -26,7 +26,7 @@ namespace ALoxe.Infrastructure.Data
         public int Ma_nguoi_dung { get; set; }
 
         [JsonProperty("user")]
-        public User UserObj { get; set; }
+        public User user { get; set; }
 
     }
 }

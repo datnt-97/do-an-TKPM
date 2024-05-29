@@ -39,7 +39,7 @@ namespace ALoxe.UI
         {
             InitializeComponent();
             _buttons = new Button[] {
-            btnHistory,btnCustomer
+            btnOverview, btnHistory,btnCustomer,
             };
             GetVersionAndBuild();
             user = db.Users.ToList().FirstOrDefault();
@@ -87,20 +87,24 @@ namespace ALoxe.UI
             _buttons[_index].BackColor = _colorBackgrondActive;
 
             pnMain.Controls.Clear();
-            var frmReceive = new ucBookCar(this, user);
 
             switch (_index)
             {
                 case 0:
+                    var frmOverview = new ucOverview();
+                    pnMain.Controls.Add(frmOverview);
+                    frmOverview.Dock = DockStyle.Top;
+                    break;
+                case 1:
                     //add control to panel
-
+                    var frmReceive = new ucBookCar(this, user);
                     pnMain.Controls.Add(frmReceive);
                     frmReceive.Dock = DockStyle.Fill;
                     break;
-                default:
-                    frmReceive = new ucBookCar(this, user, false);
-                    pnMain.Controls.Add(frmReceive);
-                    frmReceive.Dock = DockStyle.Fill;
+                case 2:
+                    var frmReceive2 = new ucBookCar(this, user, false);
+                    pnMain.Controls.Add(frmReceive2);
+                    frmReceive2.Dock = DockStyle.Fill;
                     break;
             }
         }
@@ -119,6 +123,16 @@ namespace ALoxe.UI
         }
 
         private void btnBooking_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCustomer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnHistory_Click(object sender, EventArgs e)
         {
 
         }

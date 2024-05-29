@@ -32,7 +32,7 @@ namespace ALoxe.UI
                 Task.Run(async () =>
                 {
                     await Socket.client.ConnectAsync();
-                }).Wait();
+                }).Wait(5000);
             }
             Socket.client.OnAny((eventName, data) =>
             {
@@ -43,7 +43,7 @@ namespace ALoxe.UI
                 {
                     _booking = await Util.GetBookingAsync(_booking.Id.ToString());
 
-                }).Wait();
+                }).Wait(5000);
                 this.PerformSafely(() =>
                 {
                     UpdateStatus();
@@ -107,7 +107,7 @@ namespace ALoxe.UI
                 pbKH.ImageLocation = _booking?.CustomerObj?.UserObj?.Avatar ?? "";
 
             }
-         
+
             //set data for booking detail
             lbDi.Text = _booking.BookingDetailObj.CustomerAddress;
             lbDen.Text = _booking.BookingDetailObj.CustomerAddressTo;
@@ -115,10 +115,15 @@ namespace ALoxe.UI
             lbTenKH.Text = _booking?.CustomerObj?.UserObj?.FullName ?? "";
             lbEmailKH.Text = _booking?.CustomerObj?.UserObj?.Email ?? "";
 
-           
+
 
             //set data for detail
-            lbNgayDat.Text = _booking.Date ?? "";
+            if (_booking.Date != null)
+            {
+                //chuyển về giờ địa phương từ định dạng 2023-12-15T16:15:19Z
+                var date = DateTime.Parse(_booking.Date);
+                lbNgayDat.Text = date.ToLocalTime().ToString("dd-MM-yyyy HH:mm");
+            }
             if (locationFrom != null && locationTo != null)
             {
                 lbKC.Text = (Util.Distance(locationFrom, locationTo) / 1000).ToString("0.0") + " km";

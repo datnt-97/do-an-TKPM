@@ -37,7 +37,10 @@
             txtPassword = new Components.RJTextBox();
             lbMail = new Label();
             lbPass = new Label();
+            cbIsRemember = new CheckBox();
+            ptShowPass = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ptShowPass).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -81,7 +84,7 @@
             btnLogin.FlatAppearance.BorderSize = 0;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(101, 336);
+            btnLogin.Location = new Point(101, 368);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(312, 42);
             btnLogin.TabIndex = 6;
@@ -150,7 +153,7 @@
             // lbPass
             // 
             lbPass.AutoSize = true;
-            lbPass.Location = new Point(103, 301);
+            lbPass.Location = new Point(103, 333);
             lbPass.Name = "lbPass";
             lbPass.Size = new Size(100, 20);
             lbPass.TabIndex = 10;
@@ -158,12 +161,38 @@
             lbPass.Visible = false;
             lbPass.Click += label4_Click;
             // 
+            // cbIsRemember
+            // 
+            cbIsRemember.AutoSize = true;
+            cbIsRemember.Checked = true;
+            cbIsRemember.CheckState = CheckState.Checked;
+            cbIsRemember.Location = new Point(103, 306);
+            cbIsRemember.Name = "cbIsRemember";
+            cbIsRemember.Size = new Size(136, 24);
+            cbIsRemember.TabIndex = 11;
+            cbIsRemember.Text = "Remember me?";
+            cbIsRemember.UseVisualStyleBackColor = true;
+            cbIsRemember.CheckedChanged += cbIsRemember_CheckedChanged;
+            // 
+            // ptShowPass
+            // 
+            ptShowPass.Image = Properties.Resources.eye;
+            ptShowPass.Location = new Point(372, 267);
+            ptShowPass.Name = "ptShowPass";
+            ptShowPass.Size = new Size(34, 26);
+            ptShowPass.SizeMode = PictureBoxSizeMode.StretchImage;
+            ptShowPass.TabIndex = 12;
+            ptShowPass.TabStop = false;
+            ptShowPass.Click += ptShowPass_Click;
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(515, 450);
+            Controls.Add(ptShowPass);
+            Controls.Add(cbIsRemember);
             Controls.Add(lbPass);
             Controls.Add(lbMail);
             Controls.Add(txtPassword);
@@ -179,6 +208,7 @@
             Text = "Login";
             Load += frmLogin_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ptShowPass).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -193,5 +223,7 @@
         private Components.RJTextBox txtPassword;
         private Label lbMail;
         private Label lbPass;
+        private CheckBox cbIsRemember;
+        private PictureBox ptShowPass;
     }
 }

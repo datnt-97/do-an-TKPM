@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <m:Map CredentialsProvider="AhHw3CIbbSlKOM2MAhLQB7U7oWoAKcBOsbJwAigeWYMgSkFJhjkQlvae8eUpkjQH" x:Name="myMap" />
+        <m:Map CredentialsProvider="AosX0AuioAGaTIuhCRfM2l05Bqh_emtlMTulvimcJC660V8JwOMg7ITZLaRhF3jn" x:Name="myMap" />
 
     </Grid>
 </UserControl>

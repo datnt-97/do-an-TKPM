@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,51 +20,35 @@ namespace ALoxe.Infrastructure.Data
         public string CustomerEmail { get; set; }
         [JsonProperty("so_dien_thoai")]
         public string CustomerPhone { get; set; }
-        [JsonProperty("pickUpPoint")]
+        [JsonProperty("pickupLocation")]
         public string CustomerAddress { get; set; }
 
-        [JsonProperty("dropOffPoint")]
+        [JsonProperty("returnLocation")]
         public string CustomerAddressTo { get; set; }
 
         [JsonProperty("startTime")]
         public DateTime? Date { get; set; }
         [JsonProperty("vehicleType")]
-        public string VehicleType { get; set; }
+        public int VehicleType { get; set; }
 
-        [JsonProperty("pickUplongitude")]
+        [JsonProperty("pickupLongitude")]
         public double? PickUpLongitude { get; set; }
-        [JsonProperty("pickUplatitude")]
+        [JsonProperty("pickupLatitude")]
         public double? PickUpLatitude { get; set; }
-        [JsonProperty("dropOfflongitude")]
+        [JsonProperty("returnLongitude")]
         public double? DropOffLongitude { get; set; }
-        [JsonProperty("dropOfflatitude")]
+        [JsonProperty("returnLatitude")]
         public double? DropOffLatitude { get; set; }
 
         public string VehicleTypeObj
         {
             get
             {
-                if (VehicleType == "VIP")
-                {
-                    return "Xe VIP";
-                }
-                else if (VehicleType == "FOUR_SEAT")
-                {
-                    return "Xe 4 chỗ";
-                }
-                else if (VehicleType == "FIVE_SEAT")
-                {
-                    return "Xe 5 chỗ";
-                }
-                else if (VehicleType == "SEVEN_SEAT")
-                {
-                    return "Xe 7 chỗ";
-                }
-                else
-                {
-                    return "Không xác định";
-                }
-               
+                var type = (Vehicle.VehicleType)VehicleType;
+                //get attribute display name of enum
+                var memInfo = typeof(Vehicle.VehicleType).GetMember(type.ToString());
+                var attr = memInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false);
+                return ((DisplayAttribute)attr[0]).Name;
             }
         }
     }

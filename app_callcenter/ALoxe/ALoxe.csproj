@@ -46,6 +46,7 @@
 		<PackageReference Include="HttpClientToCurl" Version="2.0.2" />
 		<PackageReference Include="MaterialDesignExtensions" Version="3.3.0" />
 		<PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -59,13 +60,20 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="ScottPlot" Version="5.0.34" />
+		<PackageReference Include="ScottPlot.WinForms" Version="5.0.34" />
 		<PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
 		<PackageReference Include="SocketIOClient" Version="3.1.1" />
 		<PackageReference Include="SocketIOClient.Newtonsoft.Json" Version="3.0.7" />
+		<PackageReference Include="SQLite.CodeFirst" Version="1.7.0.36" />
+		<PackageReference Include="System.Data.SQLite" Version="1.0.118" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="App-data\database\app.db">
+		<None Update="App-data\database\aloxe-app.db">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="App-data\database\_app.db">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="App-data\dist\quan_huyen.json">

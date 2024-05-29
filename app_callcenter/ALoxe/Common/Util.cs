@@ -1,7 +1,9 @@
 ﻿using ALoxe.Infrastructure.Data;
 using ALoxe.Infrastructure.Http;
+using ALoxe.UI;
 using BingMapsRESTToolkit;
 using Microsoft.Maps.MapControl.WPF;
+using Microsoft.VisualBasic.ApplicationServices;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Controls;
 
 namespace ALoxe.Common
 {
@@ -138,10 +141,10 @@ namespace ALoxe.Common
             return d;
         }
         public static async Task SearchAddress(string address)
-       {
+        {
             HttpRequest_v2 client = new HttpRequest_v2();
             var url = $"http://dev.virtualearth.net/REST/v1/Autosuggest?query={address}&key={KEY_MAP}";
-            var response = await client.PostAsync(url, HttpMethod.Get);
+            var response = await client.SendAsync(url, HttpMethod.Get);
             var res = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
@@ -157,7 +160,7 @@ namespace ALoxe.Common
         {
             HttpRequest_v2 httpRequest = new HttpRequest_v2();
 
-            var response = await httpRequest.PostAsync(Constant.APP_SERVER + Constant.URL_BOOKING_DETAIL + id, HttpMethod.Get);
+            var response = await httpRequest.SendAsync(Constant.APP_SERVER + Constant.URL_BOOKING_DETAIL + '/' + id, HttpMethod.Get);
             if (response.IsSuccessStatusCode)
             {
                 var res = await response.Content.ReadAsStringAsync();
@@ -189,6 +192,45 @@ namespace ALoxe.Common
 
             }
             return null;
+
+        }
+
+        public static async Task<List<Booking>> GetBookingsAsync(int userId = 0, string txt = "", bool isBooking = true)
+        {
+            HttpRequest_v2 httpRequest = new HttpRequest_v2();
+
+            var response = await httpRequest.SendAsync(Constant.APP_SERVER + Constant.URL_BOOKING + $"?{(userId == 0 ? "" : "staffId=" + userId)}{(txt == "" ? "" : "&search=" + txt)}{(!isBooking ? "&status=" + BookingStatus.BOOKED.ToString() : "")}", HttpMethod.Get);
+            if (response.IsSuccessStatusCode)
+            {
+                var res = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<Result>(res, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
+                if (result.status == "SUCCESS")
+                {
+                    try
+                    {
+                        var list = JsonConvert.DeserializeObject<List<Booking>>(JsonConvert.SerializeObject(result.data
+                            , new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore,
+                            }), new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore,
+                            });
+                        //đưa dữ liệu vào datagridview
+                        return list;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    //.Select(b=>b.ToObject<Booking>()).ToList();// result.data as List<Booking>;
+                }
+
+            }
+            return new List<Booking>();
 
         }
     }

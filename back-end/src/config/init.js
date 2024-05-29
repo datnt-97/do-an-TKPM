@@ -7,8 +7,8 @@ export default {
   database: {
     dialect: process.env.DB_DIALECT || 'mysql',
     dbHost: process.env.DB_HOST || 'localhost',
-    dbUser: process.env.DB_USER || 'root',
-    dbPassword: process.env.DB_PASS || 'root',
+    dbUser: process.env.DB_USER || 'sa',
+    dbPassword: process.env.DB_PASS || 'P@ssword2023',
     dbName: process.env.DB_NAME || 'aloxe',
     dbPort: process.env.DB_PORT || 3306,
   }

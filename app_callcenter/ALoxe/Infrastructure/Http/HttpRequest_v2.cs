@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HttpClientToCurl;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -320,7 +321,7 @@ RemoteCertificateValidationCallback
     }
     public interface IHttpRequest
     {
-        Task<HttpResponseMessage> PostAsync(string url, HttpMethod method, object data = null, BaseAuthorize authorize = null, CONTENT_TYPE contentType = CONTENT_TYPE.JSON
+        Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, object data = null, BaseAuthorize authorize = null, CONTENT_TYPE contentType = CONTENT_TYPE.JSON
             , Dictionary<string, string> headers = null, CancellationToken tk = default);
         Task<HttpResponseMessage> PostAsync(string url, string method, object data = null, BaseAuthorize authorize = null, CONTENT_TYPE contentType = CONTENT_TYPE.JSON
             , Dictionary<string, string> headers = null, CancellationToken tk = default);
@@ -389,11 +390,11 @@ RemoteCertificateValidationCallback
         {
         }
 
-        public async Task<HttpResponseMessage> PostAsync(string url, HttpMethod method, object data = null, BaseAuthorize authorize = null,
+        public async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, object data = null, BaseAuthorize authorize = null,
             CONTENT_TYPE contentType = CONTENT_TYPE.JSON, Dictionary<string, string> headers = null, CancellationToken tk = default)
         {
 
-            return await PostAsync(url, method.Method, data, authorize, contentType,headers, tk);
+            return await PostAsync(url, method.Method, data, authorize, contentType, headers, tk);
         }
 
         public async Task<HttpResponseMessage> PostAsync(string url, string method, object data = null, BaseAuthorize authorize = null,
@@ -439,6 +440,17 @@ RemoteCertificateValidationCallback
                     //servicePoint.Expect100Continue = false;
                     request.Content = content;
                     request.Method = new HttpMethod(method);
+                    string curlScript = client.GenerateCurlInString(request);
+                    Console.WriteLine(curlScript);
+                    ////write log curl format file 
+                    //string curlFileName = "--------" + url + "--------";
+                    //curlFileName += Environment.NewLine;
+                    //curlFileName += url;
+                    //curlFileName += Environment.NewLine;
+                    //curlFileName = "--------" + url + "--------";
+                    ////log file path /app-data/curl.txt
+                    //File.AppendAllText("/app-data/curl.txt", curlFileName);
+
                     message = await client.SendAsync(request, cancellationToken: tk);
                 }
                 return message;

@@ -72,6 +72,8 @@
             lbLocationFrom = new Label();
             lbLocationTo = new Label();
             btnXoaLocation = new Components.RJButton();
+            lbKC = new Label();
+            lbTien = new Label();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -301,7 +303,7 @@
             rjButton1.FlatStyle = FlatStyle.Flat;
             rjButton1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             rjButton1.ForeColor = Color.White;
-            rjButton1.Location = new Point(210, 633);
+            rjButton1.Location = new Point(210, 674);
             rjButton1.Name = "rjButton1";
             rjButton1.Size = new Size(177, 41);
             rjButton1.TabIndex = 16;
@@ -321,7 +323,7 @@
             rjButton2.FlatStyle = FlatStyle.Flat;
             rjButton2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             rjButton2.ForeColor = Color.White;
-            rjButton2.Location = new Point(402, 633);
+            rjButton2.Location = new Point(402, 674);
             rjButton2.Name = "rjButton2";
             rjButton2.Size = new Size(146, 41);
             rjButton2.TabIndex = 17;
@@ -468,7 +470,7 @@
             btnBook.FlatStyle = FlatStyle.Flat;
             btnBook.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnBook.ForeColor = Color.White;
-            btnBook.Location = new Point(15, 633);
+            btnBook.Location = new Point(15, 674);
             btnBook.Name = "btnBook";
             btnBook.Size = new Size(177, 41);
             btnBook.TabIndex = 22;
@@ -552,12 +554,34 @@
             btnXoaLocation.Visible = false;
             btnXoaLocation.Click += btnXoaLocation_Click;
             // 
+            // lbKC
+            // 
+            lbKC.AutoSize = true;
+            lbKC.Location = new Point(527, 625);
+            lbKC.Name = "lbKC";
+            lbKC.Size = new Size(50, 20);
+            lbKC.TabIndex = 31;
+            lbKC.Text = "label9";
+            lbKC.Visible = false;
+            // 
+            // lbTien
+            // 
+            lbTien.AutoSize = true;
+            lbTien.Location = new Point(750, 625);
+            lbTien.Name = "lbTien";
+            lbTien.Size = new Size(50, 20);
+            lbTien.TabIndex = 32;
+            lbTien.Text = "label9";
+            lbTien.Visible = false;
+            // 
             // frmBooking
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(1253, 920);
+            Controls.Add(lbTien);
+            Controls.Add(lbKC);
             Controls.Add(btnXoaLocation);
             Controls.Add(lbLocationTo);
             Controls.Add(lbLocationFrom);
@@ -641,5 +665,7 @@
         private Label lbLocationFrom;
         private Label lbLocationTo;
         private Components.RJButton btnXoaLocation;
+        private Label lbKC;
+        private Label lbTien;
     }
 }

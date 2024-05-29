@@ -11,6 +11,7 @@ type BookingButtonProps = {
 
 export function BookingButton({ directions, vehicleType }: BookingButtonProps) {
   const auth = useAuthenticated();
+  console.log(auth);
   const { onOpen } = useDisclosure();
   const { isLoading, bookingData, createBooking } = useBooking();
 

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ALoxe.Infrastructure.Data
 {
-    public class Driver
+    public class Driver : Staff
     {
-        public int id { get; set; }
-        public int userId { get; set; }
         public string level { get; set; }
         public string licenseType { get; set; }
         public string licenseExpiry { get; set; }
@@ -20,7 +18,5 @@ namespace ALoxe.Infrastructure.Data
         public int ma_nguoi_dung { get; set; }
         public Vehicle vehicle { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("user")]
-        public User user { get; set; }
     }
 }

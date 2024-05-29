@@ -42,12 +42,13 @@ export const handleLoginSv = async ({ phoneNumber, password }) => {
   const accessToken = jwt.sign(accessTokenPayload, AUTH_ACCESS_SERCRET_KEY);
   const refreshToken = jwt.sign({ userId: existsUser.id, type: 'refresh' }, AUTH_REFRESH_SERCRET_KEY, { expiresIn: REFRESH_TOKEN_EXPIRY_ON_SECOND });
 
-  return { 
-    userId: existsUser.id, 
-    accessToken, 
-    accessTokenExpiryIn, 
-    refreshToken, 
-    refreshTokenExpiryIn, 
+  console.log(customer, '11111111111')
+  return {
+    userId: existsUser.id,
+    accessToken,
+    accessTokenExpiryIn,
+    refreshToken,
+    refreshTokenExpiryIn,
     role: existsUser.role,
     fullName: existsUser.fullName,
     customerId: customer ? customer.id : null,

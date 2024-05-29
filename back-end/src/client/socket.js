@@ -17,7 +17,7 @@ export const initSocketConnection = (server) => {
 
   io.on('connection', (socket) => {
     // if (!GLOBAL_SOCKET) {
-      // GLOBAL_SOCKET = socket;
+    // GLOBAL_SOCKET = socket;
     // }
   });
 
@@ -32,9 +32,9 @@ const setBookingPrivateMsgId = (messageId) => {
 
 export const broadcastPrivateMessage = (messageId, message) => {
   setBookingPrivateMsgId(messageId);
-  GLOBAL_SOCKET.emit(messageId, message);
+  GLOBAL_SOCKET.emit(messageId.toString(), message);
 }
 
 export const handlePrivateMessage = (messageId, callback) => {
-  GLOBAL_SOCKET.on(messageId, callback);
+  GLOBAL_SOCKET.on(messageId.toString(), callback);
 }

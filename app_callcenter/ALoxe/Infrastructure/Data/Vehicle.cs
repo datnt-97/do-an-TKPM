@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,14 @@ namespace ALoxe.Infrastructure.Data
 
         public enum VehicleType
         {
-            VIP, FOUR_SEAT, FIVE_SEAT, SEVEN_SEAT
+            [Display(Name = "Xe VIP")]
+            VIP,
+            [Display(Name = "Xe 4 chỗ")]
+            FOUR_SEAT,
+            [Display(Name = "Xe 5 chỗ")]
+            FIVE_SEAT,
+            [Display(Name = "Xe 7 chỗ")]
+            SEVEN_SEAT
         }
 
     }

@@ -30,11 +30,17 @@ namespace ALoxe.UI
             InitializeComponent();
             this.Text = title;
             db = new AppDBContext();
-            db.Database.AutoSavepointsEnabled = false;
+            //db.Database.AutoSavepointsEnabled = false;
             dtpVIP.Format = DateTimePickerFormat.Custom;
             dtpVIP.CustomFormat = "dd/MM/yyyy hh:mm";
             dtpVIP.MinDate = DateTime.Now;
             user = db.Users.FirstOrDefault();
+
+            lbKC.Visible = false;
+            lbLocationFrom.Visible = false;
+            lbLocationTo.Visible = false;
+            lbTien.Visible = false;
+
 
         }
         void SetUCMap(ucMap ucMap)
@@ -274,6 +280,24 @@ namespace ALoxe.UI
                     mapALL.myMap.ZoomLevel = 0;
                 }
 
+                //kc kilomet lấy sau 2 số thập phân
+                var kc = Math.Round(distance / 1000, 2);
+                lbKC.Text = kc.ToString() + " km";
+
+                lbLocationFrom.Text = locationFrom.ToString();
+                lbLocationTo.Text = locationTo.ToString();
+
+                lbKC.Visible = true;
+                lbLocationFrom.Visible = true;
+                lbLocationTo.Visible = true;
+                //tính tiền và format tiền
+                var tien = Math.Round(kc * 10000, 0);
+                //định dạng tiền tệ vnd
+                lbTien.Text = "Dự kiến : " + tien.ToString("N0") + " VNĐ";
+                lbTien.Visible = true;
+
+                //lbTien.Text = "Dự kiến : " + Math.Round(kc * 10000, 0).ToString() + " VNĐ";
+                //lbTien.Visible = true;
             }
             this.locationFrom = locationFrom;
             this.locationTo = locationTo;
@@ -456,7 +480,7 @@ namespace ALoxe.UI
                 CustomerAddress = diaChi,
                 CustomerAddressTo = diaChiDen,
                 Date = dtpVIP.Value,
-                VehicleType = vehicleTypeEnum.ToString(),
+                VehicleType = ((int)vehicleTypeEnum),
                 CustomerEmail = txtEmail.Text,
                 DropOffLatitude = locationTo.Latitude,
                 DropOffLongitude = locationTo.Longitude,
@@ -476,15 +500,16 @@ namespace ALoxe.UI
             {
                 startTime = dtpVIP.Value.ToString("yyyy-MM-dd HH:mm:ss"),
                 staffId = user.Id,
-                bookingDetail = new
+                orderDetail = new
                 {
                     vehicleType = vehicleTypeEnum.ToString(),
-                    pickUpLongitude = locationFrom.Longitude,
-                    pickUpLatitude = locationFrom.Latitude,
-                    dropOffLongitude = locationTo.Longitude,
-                    dropOffLatitude = locationTo.Latitude,
-                    pickUpPoint = diaChi,
-                    dropOffPoint = diaChiDen
+                    pickupLongitude = locationFrom.Longitude,
+                    pickupLatitude = locationFrom.Latitude,
+                    returnLongitude = locationTo.Longitude,
+                    returnLatitude = locationTo.Latitude,
+                    pickupLocation = diaChi,
+                    returnLocation = diaChiDen,
+                    startTime = dtpVIP.Value.ToString("yyyy-MM-dd HH:mm:ss"),
                 },
                 customer = new
                 {
@@ -505,7 +530,7 @@ namespace ALoxe.UI
 
             var loading = new frmLoading(async (l) =>
             {
-                response = await httpRequest.PostAsync(Constant.APP_SERVER + Constant.URL_DAT_XE, HttpMethod.Post, post);
+                response = await httpRequest.SendAsync(Constant.APP_SERVER + Constant.URL_BOOKING, HttpMethod.Post, post);
                 var result = await response.Content.ReadAsStringAsync();
                 res = JsonConvert.DeserializeObject<Result>(result);
                 l.PerformSafely(() => l.Close());
@@ -582,6 +607,12 @@ namespace ALoxe.UI
             lbLocationFrom.Text = "";
             lbLocationTo.Text = "";
 
+            lbKC.Visible = false;
+            lbLocationFrom.Visible = false;
+            lbLocationTo.Visible = false;
+            lbTien.Visible = false;
+
+
         }
 
         private void txtDiaChi_TextChanged(object sender, EventArgs e)
@@ -610,7 +641,7 @@ namespace ALoxe.UI
                 var text = txtSDT.Text;
                 Task.Run(async () =>
                 {
-                    var response = await httpRequest.PostAsync(Constant.APP_SERVER + Constant.URL_SEARCH_CUSTOMER + $"?search={text}", HttpMethod.Get
+                    var response = await httpRequest.SendAsync(Constant.APP_SERVER + Constant.URL_SEARCH_CUSTOMER + $"?search={text}", HttpMethod.Get
                         , headers: new Dictionary<string, string>
                         {
                             { "x-access-token",user.Token}

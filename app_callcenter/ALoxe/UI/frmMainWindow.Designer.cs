@@ -32,8 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainWindow));
             pnMain = new Panel();
             MenuVertical = new Panel();
+            panel1 = new Panel();
+            btnOverview = new Button();
             pictureBox1 = new PictureBox();
             panel2 = new Panel();
+            lbUserName = new Label();
             btnsalir = new PictureBox();
             panel4 = new Panel();
             panel3 = new Panel();
@@ -41,7 +44,6 @@
             btnHistory = new Button();
             btninicio = new PictureBox();
             toolTip1 = new ToolTip(components);
-            lbUserName = new Label();
             MenuVertical.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
@@ -62,6 +64,8 @@
             // MenuVertical
             // 
             MenuVertical.BackColor = Color.FromArgb(26, 32, 40);
+            MenuVertical.Controls.Add(panel1);
+            MenuVertical.Controls.Add(btnOverview);
             MenuVertical.Controls.Add(pictureBox1);
             MenuVertical.Controls.Add(panel2);
             MenuVertical.Controls.Add(panel4);
@@ -75,6 +79,33 @@
             MenuVertical.Name = "MenuVertical";
             MenuVertical.Size = new Size(293, 734);
             MenuVertical.TabIndex = 4;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(0, 80, 200);
+            panel1.Location = new Point(0, 210);
+            panel1.Margin = new Padding(4, 5, 4, 5);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(7, 62);
+            panel1.TabIndex = 9;
+            // 
+            // btnOverview
+            // 
+            btnOverview.BackColor = Color.FromArgb(26, 32, 40);
+            btnOverview.FlatAppearance.BorderSize = 0;
+            btnOverview.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 80, 200);
+            btnOverview.FlatStyle = FlatStyle.Flat;
+            btnOverview.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnOverview.ForeColor = Color.White;
+            btnOverview.Image = (Image)resources.GetObject("btnOverview.Image");
+            btnOverview.ImageAlign = ContentAlignment.MiddleLeft;
+            btnOverview.Location = new Point(4, 210);
+            btnOverview.Margin = new Padding(4, 5, 4, 5);
+            btnOverview.Name = "btnOverview";
+            btnOverview.Size = new Size(289, 62);
+            btnOverview.TabIndex = 9;
+            btnOverview.Text = "Overview";
+            btnOverview.UseVisualStyleBackColor = false;
             // 
             // pictureBox1
             // 
@@ -96,6 +127,16 @@
             panel2.Size = new Size(293, 70);
             panel2.TabIndex = 0;
             // 
+            // lbUserName
+            // 
+            lbUserName.AutoSize = true;
+            lbUserName.ForeColor = SystemColors.ButtonHighlight;
+            lbUserName.Location = new Point(66, 24);
+            lbUserName.Name = "lbUserName";
+            lbUserName.Size = new Size(50, 20);
+            lbUserName.TabIndex = 0;
+            lbUserName.Text = "label1";
+            // 
             // btnsalir
             // 
             btnsalir.Cursor = Cursors.Hand;
@@ -112,7 +153,7 @@
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(0, 80, 200);
-            panel4.Location = new Point(0, 279);
+            panel4.Location = new Point(0, 353);
             panel4.Margin = new Padding(4, 5, 4, 5);
             panel4.Name = "panel4";
             panel4.Size = new Size(7, 62);
@@ -121,7 +162,7 @@
             // panel3
             // 
             panel3.BackColor = Color.FromArgb(0, 80, 200);
-            panel3.Location = new Point(0, 208);
+            panel3.Location = new Point(0, 282);
             panel3.Margin = new Padding(4, 5, 4, 5);
             panel3.Name = "panel3";
             panel3.Size = new Size(7, 62);
@@ -137,13 +178,14 @@
             btnCustomer.ForeColor = Color.White;
             btnCustomer.Image = (Image)resources.GetObject("btnCustomer.Image");
             btnCustomer.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCustomer.Location = new Point(4, 279);
+            btnCustomer.Location = new Point(4, 353);
             btnCustomer.Margin = new Padding(4, 5, 4, 5);
             btnCustomer.Name = "btnCustomer";
             btnCustomer.Size = new Size(289, 62);
             btnCustomer.TabIndex = 5;
             btnCustomer.Text = "Lịch hẹn";
             btnCustomer.UseVisualStyleBackColor = false;
+            btnCustomer.Click += btnCustomer_Click;
             // 
             // btnHistory
             // 
@@ -155,13 +197,14 @@
             btnHistory.ForeColor = Color.White;
             btnHistory.Image = (Image)resources.GetObject("btnHistory.Image");
             btnHistory.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHistory.Location = new Point(4, 208);
+            btnHistory.Location = new Point(4, 282);
             btnHistory.Margin = new Padding(4, 5, 4, 5);
             btnHistory.Name = "btnHistory";
             btnHistory.Size = new Size(289, 62);
             btnHistory.TabIndex = 3;
             btnHistory.Text = "Lịch sửa đặt xe";
             btnHistory.UseVisualStyleBackColor = false;
+            btnHistory.Click += btnHistory_Click;
             // 
             // btninicio
             // 
@@ -178,16 +221,6 @@
             // toolTip1
             // 
             toolTip1.Popup += toolTip1_Popup;
-            // 
-            // lbUserName
-            // 
-            lbUserName.AutoSize = true;
-            lbUserName.ForeColor = SystemColors.ButtonHighlight;
-            lbUserName.Location = new Point(66, 24);
-            lbUserName.Name = "lbUserName";
-            lbUserName.Size = new Size(50, 20);
-            lbUserName.TabIndex = 0;
-            lbUserName.Text = "label1";
             // 
             // frmMainWindow
             // 
@@ -224,5 +257,7 @@
         private ToolTip toolTip1;
         private PictureBox pictureBox1;
         private Label lbUserName;
+        private Panel panel1;
+        private Button btnOverview;
     }
 }

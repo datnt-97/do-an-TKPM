@@ -78,6 +78,21 @@ namespace ALoxe.UI
             {
                 var row = new DataGridViewRow();
                 row.Tag = item;
+                var date = DateTime.Parse(item.Date);
+                var local = date.ToLocalTime().ToString("dd-MM-yyyy HH:mm");
+                var localEnd = "";
+                if (!string.IsNullOrEmpty(item.DateEnd))
+                {
+                    var dateEnd = DateTime.Parse(item.DateEnd);
+                    localEnd = dateEnd.ToLocalTime().ToString("dd-MM-yyyy HH:mm");
+                }
+
+                //get attribute display name of enum status
+                var enumType = typeof(BookingStatus);
+                var memInfo = enumType.GetMember(item.bookingStatus.ToString());
+                var attr = memInfo[0].GetCustomAttributes(typeof(NameValue), false);
+                var name = ((NameValue)attr[0]).Name;
+
                 row.CreateCells(dgBooking,
                     item.Code ?? "",
                     item.CustomerObj?.UserObj.FullName ?? "",
@@ -86,13 +101,14 @@ namespace ALoxe.UI
                     item.BookingDetailObj?.CustomerAddressTo ?? "",
                     item.DriverObj?.user?.FullName ?? "",
                     item.DriverObj?.vehicle?.licensePlate ?? "",
-                    item.BookingDetailObj?.VehicleType ?? "",
-                    item.StaffObj?.UserObj.FullName ?? "",
-                    item.Date ?? "",
-                    item.DateEnd ?? "",
-                    item.Status ?? "",
+                    item.BookingDetailObj?.VehicleTypeObj ?? "",
+                    item.StaffObj?.user.FullName ?? "",
+                    local ?? "",
+                    localEnd ?? "",
+                    name ?? "",
                     "Chi tiết"
                     );
+                row.Cells[12].Style.WrapMode = DataGridViewTriState.True;
                 dgBooking.Rows.Add(row);
 
             }
@@ -101,7 +117,7 @@ namespace ALoxe.UI
         {
             HttpRequest_v2 httpRequest = new HttpRequest_v2();
 
-            var response = await httpRequest.PostAsync(Constant.APP_SERVER + Constant.URL_DAT_XE + $"?staffId={user.Id}&search={txtSearch.Text ?? ""}&{(!isBooking ? "status=" + BookingStatus.BOOKED.ToString() : "")}", HttpMethod.Get);
+            var response = await httpRequest.SendAsync(Constant.APP_SERVER + Constant.URL_BOOKING + $"?staffId={user.Id}&search={txtSearch.Text ?? ""}&{(!isBooking ? "status=" + BookingStatus.BOOKED.ToString() : "")}", HttpMethod.Get);
             if (response.IsSuccessStatusCode)
             {
                 var res = await response.Content.ReadAsStringAsync();
@@ -144,7 +160,6 @@ namespace ALoxe.UI
             {
                 var row = dataGrid.Rows[e.RowIndex];
                 var booking = row.Tag as Booking;
-                Booking bookingLoad = null;
 
                 var form = new frmBookingDetail(booking);
                 form.Show();

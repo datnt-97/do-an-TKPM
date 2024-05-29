@@ -16,9 +16,9 @@ namespace ALoxe.Common
 
         //get app.config 
         public static string APP_SERVER = string.Format("{0}://{1}:{2}", SSL == "true" ? "https" : "http", HOST, PORT);
-        public static string URL_DAT_XE = "/api/bookings";
+        public static string URL_BOOKING = "/api/orders";
         public static string URL_SEARCH_CUSTOMER = "/api/customers";
-        public static string URL_BOOKING_DETAIL = "/api/bookings/";
+        public static string URL_BOOKING_DETAIL = URL_BOOKING;
         public static string URL_LOGIN = "/api/auth/login";
 
 

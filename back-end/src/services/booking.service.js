@@ -15,6 +15,7 @@ import { broadcastPrivateMessage } from '../client/socket';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import Auth from '../models/auth.model';
 import { Op } from 'sequelize';
+import { tr } from 'date-fns/locale';
 
 export const listBookingSV = async ({ customerId, staffId, driverId, status, search }) => {
   const condition = {};
@@ -213,8 +214,11 @@ export const createBookingSV = async (bookingInput) => {
 
   //  Push message to queue immediately
   const nowInVN = zonedTimeToUtc(new Date(), "Asia/Ho_Chi_Minh");
+  const nowInVNCompare = new Date(nowInVN.getFullYear(), nowInVN.getMonth(), nowInVN.getDate(), nowInVN.getHours(), nowInVN.getMinutes(), 0, 0);
+
   const startTimeInVN = zonedTimeToUtc(new Date(startTime), "Asia/Ho_Chi_Minh");
-  if (startTimeInVN.getTime() <= nowInVN.getTime()) {
+  const startTimeInVNCompare = new Date(startTimeInVN.getFullYear(), startTimeInVN.getMonth(), startTimeInVN.getDate(), startTimeInVN.getHours(), startTimeInVN.getMinutes(), 0, 0);
+  if (startTimeInVNCompare.getTime() <= nowInVNCompare.getTime()) {
     const driverInfo = await __handleAssignDriverForBooking(booking);
     const customer = await Customer.findOne({
       where: { id: customerId },
@@ -574,6 +578,7 @@ const __handleAssignDriverForBooking = async (booking) => {
 function bookingScheduler() {
   cron.schedule('*/10 * * * * *', async () => {
     console.log('running a task every minute');
+
     const bookingsBooked = await Booking.findAll({
       where: { status: "BOOKED" },
       include: [
@@ -590,8 +595,12 @@ function bookingScheduler() {
           const nowInVN = zonedTimeToUtc(new Date(), "Asia/Ho_Chi_Minh");
           const startTimeInVN = zonedTimeToUtc(new Date(bookingData.startTime), "Asia/Ho_Chi_Minh");
           if (startTimeInVN.getTime() <= nowInVN.getTime()) {
-
-            const driverInfo = await __handleAssignDriverForBooking(bookingData);
+            let driverInfo = null;
+            try {
+              driverInfo = await __handleAssignDriverForBooking(bookingData);
+            } catch (err) {
+              console.log('err----', err);
+            }
             const customerData = await Customer.findOne({
               where: { id: bookingData.customerId },
               include: [
@@ -602,11 +611,14 @@ function bookingScheduler() {
               ]
             });
             // Handle send message to socket channels
-            console.log('driverInfo.id----', driverInfo.driver.id);
             broadcastPrivateMessage(bookingData.id, "Hello");
             if (bookingData.staffId) {
               broadcastPrivateMessage(bookingData.staffId, "Hello");
             }
+            if (!driverInfo)
+              return null;
+            console.log('driverInfo.id----', driverInfo.driver.id);
+
             broadcastPrivateMessage(driverInfo.driver.id, JSON.stringify({
               message: "Bạn có 1 đơn đặt xe",
               booking: { ...bookingData.toJSON(), status: "DRIVER_FOUND" },

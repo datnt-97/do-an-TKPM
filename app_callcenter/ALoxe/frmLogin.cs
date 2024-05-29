@@ -20,6 +20,8 @@ namespace ALoxe
         public Color BackgroundColor { get; set; } = Color.White;
         AppDBContext db;
         public bool UserSuccessfullyAuthenticated { get; private set; } = false;
+        private bool isShowPass = false;
+        private bool isRemember = true;
         public frmLogin(AppDBContext db)
         {
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
@@ -59,8 +61,19 @@ namespace ALoxe
                 await Task.Run(async () =>
                   {
                       HttpRequest_v2 httpRequest = new HttpRequest_v2();
+                      if (isRemember)
+                      {
 
-                      var response = await httpRequest.PostAsync(Constant.APP_SERVER + Constant.URL_LOGIN, HttpMethod.Post, new
+                          db.UserRemembers.RemoveRange(db.UserRemembers);
+                          db.UserRemembers.Add(new UserRemember
+                          {
+                              Phone = txtEmail.Texts,
+                              Pasword = txtPassword.Texts
+                          });
+                          db.SaveChanges();
+                      }
+
+                      var response = await httpRequest.SendAsync(Constant.APP_SERVER + Constant.URL_LOGIN, HttpMethod.Post, new
                       {
                           phoneNumber = txtEmail.Texts,
                           password = txtPassword.Texts
@@ -120,13 +133,9 @@ namespace ALoxe
             if (loginSuccess)
             {
                 lbPass.ForeColor = Color.Green;
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    db.Users.RemoveRange(db.Users);
-                    db.Users.Add(userLogin);
-                    db.SaveChanges();
-                    scope.Complete();
-                }
+                db.Users.RemoveRange(db.Users);
+                db.Users.Add(userLogin);
+                db.SaveChanges();
                 UserSuccessfullyAuthenticated = true;
                 this.Close();
             }
@@ -143,6 +152,7 @@ namespace ALoxe
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
+            ptShowPass.Image = Properties.Resources.eye;
             if (db.Users.FirstOrDefault() != null)
             {
                 UserSuccessfullyAuthenticated = true;
@@ -153,6 +163,14 @@ namespace ALoxe
 
             txtEmail.TextBox.Font = new Font("Arial", 12, FontStyle.Bold);
             txtPassword.TextBox.Font = new Font("Arial", 12, FontStyle.Bold);
+            //get user remember
+            var userRemember = db.UserRemembers.FirstOrDefault();
+            if (userRemember != null)
+            {
+                txtEmail.Texts = userRemember.Phone;
+                txtPassword.Texts = userRemember.Pasword;
+                cbIsRemember.Checked = true;
+            }
 
         }
 
@@ -212,6 +230,27 @@ namespace ALoxe
             {
                 rjButton1_Click(sender, e);
             }
+        }
+
+        private void ptShowPass_Click(object sender, EventArgs e)
+        {
+            if (isShowPass)
+            {
+                txtPassword.PasswordChar = false;
+                ptShowPass.Image = Properties.Resources.eye;
+                isShowPass = false;
+            }
+            else
+            {
+                txtPassword.PasswordChar = true;
+                ptShowPass.Image = Properties.Resources.eye_close;
+                isShowPass = true;
+            }
+        }
+
+        private void cbIsRemember_CheckedChanged(object sender, EventArgs e)
+        {
+            isRemember = cbIsRemember.Checked;
         }
     }
 }
