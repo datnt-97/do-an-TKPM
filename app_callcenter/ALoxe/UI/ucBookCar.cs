@@ -78,13 +78,11 @@ namespace ALoxe.UI
             {
                 var row = new DataGridViewRow();
                 row.Tag = item;
-                var date = DateTime.Parse(item.Date);
-                var local = date.ToLocalTime().ToString("dd-MM-yyyy HH:mm");
+                var local = item.StartTime.ToString("dd-MM-yyyy HH:mm");
                 var localEnd = "";
                 if (!string.IsNullOrEmpty(item.DateEnd))
                 {
-                    var dateEnd = DateTime.Parse(item.DateEnd);
-                    localEnd = dateEnd.ToLocalTime().ToString("dd-MM-yyyy HH:mm");
+                    localEnd = item.EndTime.ToString("dd-MM-yyyy HH:mm");
                 }
 
                 //get attribute display name of enum status

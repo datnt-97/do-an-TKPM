@@ -183,6 +183,16 @@ namespace ALoxe.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap f {
+            get {
+                object obj = ResourceManager.GetObject("f", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MenuStrip_OrderASCbool {
             get {
                 object obj = ResourceManager.GetObject("MenuStrip_OrderASCbool", resourceCulture);
@@ -247,6 +257,16 @@ namespace ALoxe.Properties {
             get {
                 object obj = ResourceManager.GetObject("MenuStrip_ResizeGrip", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon overview {
+            get {
+                object obj = ResourceManager.GetObject("overview", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

@@ -47,32 +47,27 @@ namespace ALoxe
                 loginForm.BringToFront();
                 Application.Run(loginForm);
                 var user = db.Users.ToList().FirstOrDefault();
-                Socket.client = new SocketIOClient.SocketIO(Constant.APP_SERVER, new SocketIOClient.SocketIOOptions
+                Socket.client = new SocketIOClient.SocketIO(Constant.APP_SERVER_SOCKET, new SocketIOClient.SocketIOOptions
                 {
-                    Path = "/order-event",
+                    Path = "/booking-event",
                     Reconnection = true,
                     ReconnectionDelay = 500,
                     Transport = SocketIOClient.Transport.TransportProtocol.Polling | SocketIOClient.Transport.TransportProtocol.WebSocket,
-
-
                 });
                 if (loginForm.UserSuccessfullyAuthenticated)
                 {
-
                     Task.Run(async () =>
                     {
 
                         Socket.client.On(user.Id.ToString(), response =>
                         {
-
-
                         });
                         Socket.client.OnConnected += async (sender, e) =>
                         {
                             await Socket.client.EmitAsync("hi", "socket.io");
                         };
                         await Socket.client.ConnectAsync();
-                    }).Wait(5000);
+                    }).Wait();
 
                     Application.Run(new frmMainWindow());
                 }

@@ -29,18 +29,20 @@
         private void InitializeComponent()
         {
             containerMain = new SplitContainer();
-            panel1 = new Panel();
-            label3 = new Label();
+            containerLeft = new SplitContainer();
             label2 = new Label();
+            lbTongChuyen = new Label();
+            label1 = new Label();
             lbTongChuyenDi = new Label();
             lbDoanhThu = new Label();
-            label1 = new Label();
             containerSub = new SplitContainer();
             ((System.ComponentModel.ISupportInitialize)containerMain).BeginInit();
             containerMain.Panel1.SuspendLayout();
             containerMain.Panel2.SuspendLayout();
             containerMain.SuspendLayout();
-            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)containerLeft).BeginInit();
+            containerLeft.Panel1.SuspendLayout();
+            containerLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)containerSub).BeginInit();
             containerSub.SuspendLayout();
             SuspendLayout();
@@ -53,56 +55,71 @@
             // 
             // containerMain.Panel1
             // 
-            containerMain.Panel1.Controls.Add(panel1);
-            containerMain.Panel1.Controls.Add(lbTongChuyenDi);
-            containerMain.Panel1.Controls.Add(lbDoanhThu);
-            containerMain.Panel1.Controls.Add(label1);
+            containerMain.Panel1.Controls.Add(containerLeft);
             containerMain.Panel1.Paint += splitContainer1_Panel1_Paint;
             // 
             // containerMain.Panel2
             // 
             containerMain.Panel2.Controls.Add(containerSub);
-            containerMain.Size = new Size(1077, 493);
+            containerMain.Size = new Size(1077, 528);
             containerMain.SplitterDistance = 641;
             containerMain.TabIndex = 0;
             // 
-            // panel1
+            // containerLeft
             // 
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(label2);
-            panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 385);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(641, 108);
-            panel1.TabIndex = 5;
+            containerLeft.Dock = DockStyle.Fill;
+            containerLeft.Location = new Point(0, 0);
+            containerLeft.Name = "containerLeft";
+            containerLeft.Orientation = Orientation.Horizontal;
             // 
-            // label3
+            // containerLeft.Panel1
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 17F, FontStyle.Bold);
-            label3.Location = new Point(353, 31);
-            label3.Name = "label3";
-            label3.Size = new Size(202, 40);
-            label3.TabIndex = 4;
-            label3.Text = "0 Khách hàng";
+            containerLeft.Panel1.Controls.Add(label2);
+            containerLeft.Panel1.Controls.Add(lbTongChuyen);
+            containerLeft.Panel1.Controls.Add(label1);
+            containerLeft.Panel1.Controls.Add(lbTongChuyenDi);
+            containerLeft.Panel1.Controls.Add(lbDoanhThu);
+            containerLeft.Panel1.Paint += containerLeft_Panel1_Paint;
+            containerLeft.Size = new Size(641, 528);
+            containerLeft.SplitterDistance = 189;
+            containerLeft.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 17F, FontStyle.Bold);
-            label2.Location = new Point(12, 31);
+            label2.Font = new Font("Segoe UI", 15F);
+            label2.Location = new Point(380, 18);
             label2.Name = "label2";
-            label2.Size = new Size(121, 40);
+            label2.Size = new Size(186, 35);
             label2.TabIndex = 3;
-            label2.Text = "0 Tài xế";
+            label2.Text = "Tổng chuyến đi";
+            // 
+            // lbTongChuyen
+            // 
+            lbTongChuyen.AutoSize = true;
+            lbTongChuyen.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            lbTongChuyen.Location = new Point(380, 53);
+            lbTongChuyen.Name = "lbTongChuyen";
+            lbTongChuyen.Size = new Size(198, 54);
+            lbTongChuyen.TabIndex = 4;
+            lbTongChuyen.Text = "0 Chuyến";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15F);
+            label1.Location = new Point(16, 18);
+            label1.Name = "label1";
+            label1.Size = new Size(193, 35);
+            label1.TabIndex = 0;
+            label1.Text = "Tổng doanh thu";
             // 
             // lbTongChuyenDi
             // 
             lbTongChuyenDi.AutoSize = true;
             lbTongChuyenDi.Font = new Font("Segoe UI", 11F);
             lbTongChuyenDi.ForeColor = SystemColors.ControlDarkDark;
-            lbTongChuyenDi.Location = new Point(40, 129);
+            lbTongChuyenDi.Location = new Point(26, 107);
             lbTongChuyenDi.Name = "lbTongChuyenDi";
             lbTongChuyenDi.Size = new Size(112, 25);
             lbTongChuyenDi.TabIndex = 2;
@@ -112,21 +129,11 @@
             // 
             lbDoanhThu.AutoSize = true;
             lbDoanhThu.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lbDoanhThu.Location = new Point(30, 75);
+            lbDoanhThu.Location = new Point(16, 53);
             lbDoanhThu.Name = "lbDoanhThu";
             lbDoanhThu.Size = new Size(146, 54);
             lbDoanhThu.TabIndex = 1;
             lbDoanhThu.Text = "0 VND";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(30, 29);
-            label1.Name = "label1";
-            label1.Size = new Size(193, 35);
-            label1.TabIndex = 0;
-            label1.Text = "Tổng doanh thu";
             // 
             // containerSub
             // 
@@ -139,8 +146,8 @@
             // containerSub.Panel2
             // 
             containerSub.Panel2.Padding = new Padding(5);
-            containerSub.Size = new Size(432, 493);
-            containerSub.SplitterDistance = 385;
+            containerSub.Size = new Size(432, 528);
+            containerSub.SplitterDistance = 411;
             containerSub.TabIndex = 0;
             // 
             // ucOverview
@@ -150,15 +157,16 @@
             BackColor = SystemColors.ControlLightLight;
             Controls.Add(containerMain);
             Name = "ucOverview";
-            Size = new Size(1077, 493);
+            Size = new Size(1077, 528);
             Load += ucOverview_Load;
             containerMain.Panel1.ResumeLayout(false);
-            containerMain.Panel1.PerformLayout();
             containerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)containerMain).EndInit();
             containerMain.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            containerLeft.Panel1.ResumeLayout(false);
+            containerLeft.Panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)containerLeft).EndInit();
+            containerLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)containerSub).EndInit();
             containerSub.ResumeLayout(false);
             ResumeLayout(false);
@@ -171,8 +179,8 @@
         private Label lbTongChuyenDi;
         private Label lbDoanhThu;
         private Label label1;
-        private Label label3;
+        private SplitContainer containerLeft;
         private Label label2;
-        private Panel panel1;
+        private Label lbTongChuyen;
     }
 }

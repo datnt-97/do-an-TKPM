@@ -93,7 +93,7 @@ namespace ALoxe.UI
                 case 0:
                     var frmOverview = new ucOverview();
                     pnMain.Controls.Add(frmOverview);
-                    frmOverview.Dock = DockStyle.Top;
+                    frmOverview.Dock = DockStyle.Fill;
                     break;
                 case 1:
                     //add control to panel

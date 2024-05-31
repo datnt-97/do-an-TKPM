@@ -21,14 +21,15 @@ namespace ALoxe.Infrastructure.Data
 
         public enum VehicleType
         {
-            [Display(Name = "Xe VIP")]
-            VIP,
+
             [Display(Name = "Xe 4 chỗ")]
-            FOUR_SEAT,
+            FOUR_SEAT = 1,
             [Display(Name = "Xe 5 chỗ")]
             FIVE_SEAT,
             [Display(Name = "Xe 7 chỗ")]
-            SEVEN_SEAT
+            SEVEN_SEAT,
+            [Display(Name = "Xe VIP")]
+            VIP,
         }
 
     }

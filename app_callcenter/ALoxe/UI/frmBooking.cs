@@ -498,7 +498,7 @@ namespace ALoxe.UI
             }
             var booking = new
             {
-                startTime = dtpVIP.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+                startTime = dtpVIP.Value.ToUniversalTime(),
                 staffId = user.Id,
                 orderDetail = new
                 {
@@ -509,7 +509,7 @@ namespace ALoxe.UI
                     returnLatitude = locationTo.Latitude,
                     pickupLocation = diaChi,
                     returnLocation = diaChiDen,
-                    startTime = dtpVIP.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+                    startTime = dtpVIP.Value.ToUniversalTime(),
                 },
                 customer = new
                 {

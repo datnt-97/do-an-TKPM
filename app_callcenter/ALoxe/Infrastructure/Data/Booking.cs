@@ -37,6 +37,30 @@ namespace ALoxe.Infrastructure.Data
         //amount
         [JsonProperty("totalPrice")]
         public int? Amount { get; set; }
+        public DateTime StartTime
+        {
+            get
+            {
+                //2024-05-30T03:56:59.295Z
+                //yyyy-MM-ddTHH:mm:ss.fffZ
+                var k = DateTime.ParseExact(Date.Split("T")[0] + Date.Split("T")[1].Split('.')[0].Replace("Z", ""), "yyyy-MM-ddHH:mm:ss", null);
+                //utc to local
+                return k.ToLocalTime();
+            }
+        }
+
+        public DateTime EndTime
+        {
+            get
+            {
+                //2024-05-30T03:56:59.295Z
+                //yyyy-MM-ddTHH:mm:ss.fffZ
+                var k = DateTime.ParseExact(DateEnd.Split("T")[0] + DateEnd.Split("T")[1].Split('.')[0].Replace("Z", ""), "yyyy-MM-ddHH:mm:ss", null);
+                //utc to local
+                return k.ToLocalTime();
+
+            }
+        }
 
         public BookingStatus bookingStatus
         {

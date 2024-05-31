@@ -35,8 +35,8 @@ namespace ALoxe.UI
                 }).Wait(5000);
             }
             Socket.client.OnAny((eventName, data) =>
-            {
-            });
+        {
+        });
             Socket.client.On(_booking.Id.ToString(), response =>
             {
                 Task.Run(async () =>
@@ -122,7 +122,7 @@ namespace ALoxe.UI
             {
                 //chuyển về giờ địa phương từ định dạng 2023-12-15T16:15:19Z
                 var date = DateTime.Parse(_booking.Date);
-                lbNgayDat.Text = date.ToLocalTime().ToString("dd-MM-yyyy HH:mm");
+                lbNgayDat.Text = _booking.StartTime.ToString("dd/MM/yyyy HH:mm");
             }
             if (locationFrom != null && locationTo != null)
             {
